@@ -1,4 +1,8 @@
 (function () {
+    if (window.AutoTheme != undefined) {
+    window.theme = window.AutoTheme
+    }
+
     (async()=>{new Function(await (await fetch("https://raw.githubusercontent.com/MAJESTY5164/Majestys-theme-loader/refs/heads/main/Verified%20Themes.js")).text())();})(); // Load Verified Themes
 
     window.help = function() {
@@ -16,10 +20,35 @@
         (async()=>{new Function(await (await fetch(window.custom)).text())();})();
     }
 
+    window.Gradiant = function(bottom, top) {
+        window.theme = "Gradiant"
+        if (top === undefined) {
+            console.log("fail")
+        }else {
+        if (bottom === "load") {
+            bottom = window.GB
+            top = window.GT
+        }
+        window.GT = top
+        window.GB = bottom
+        document.querySelector("html").className = "custom-theme-background full-motion theme-dark platform-web font-size-16";
+        const style = document.createElement("style");
+        style.setAttribute("data-client-themes", "true");
+        style.setAttribute("data-rh", "true");
+        style.textContent = `
+          .custom-theme-background {
+              --custom-theme-background: linear-gradient(64.92deg, ${bottom} 0%, ${top} 100%);
+          }
+        `;
+        document.head.appendChild(style);
+    }}
+
     // Function to apply the Citrus Sherbert theme
     const NitroTheme = () => {
         if (window.theme === "custom") {
             (async()=>{new Function(await (await fetch(window.custom)).text())();})();
+        }else if(window.theme === "Gradiant") {
+            window.Gradiant("load", "load")
         }else if(window.theme === "Citrus Sherbert") {
             document.querySelector("html").className = "custom-theme-background full-motion theme-dark platform-web font-size-16";
         
