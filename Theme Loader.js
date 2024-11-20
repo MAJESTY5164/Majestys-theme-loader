@@ -14,6 +14,29 @@ window.names = []; // List of names
 window.icon = []; // List of icon
 window.funcname = []; // List of function names
 
+window.selectbutton = function() {
+// Search for the target div
+const targetDiv = document.querySelector('.item_a0.themed_a0[role="tab"][aria-label="Appearance"]');
+
+// Check if the element exists
+if (targetDiv) {
+    // Clone the found element
+    const clonedDiv = targetDiv.cloneNode(true);
+
+    // Modify the cloned element's properties
+    clonedDiv.setAttribute('aria-label', 'Nitro Themes');
+    clonedDiv.innerText = 'Nitro Themes';
+
+    // Add click event listener to the cloned element
+    clonedDiv.addEventListener('click', () => {
+        select();
+    });
+
+    // Insert the cloned element into the DOM (e.g., after the original)
+    targetDiv.parentElement.insertBefore(clonedDiv, targetDiv.nextSibling);
+}
+}
+
 window.Gradiant = function(bottom, top) {
     func = "Gradiant(\"load\", \"load\")"
     if (top === undefined) {
@@ -123,13 +146,13 @@ function select() {
     document.body.appendChild(overlay);
 }
 
-function load() {
+function reload() {
     if (load != undefined) {
         window[func]();
     }
 }
 
-setInterval(load, 500);
+setInterval(reload, 500);
 
 // Crimson Moon
 (function() {
