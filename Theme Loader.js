@@ -15,26 +15,33 @@ window.icon = []; // List of icon
 window.funcname = []; // List of function names
 
 window.selectbutton = function() {
-// Search for the target div
-const targetDiv = document.querySelector('.item_a0.themed_a0[role="tab"][aria-label="Appearance"]');
+// Check if the button already exists by looking for a specific aria-label or class
+const existingButton = document.querySelector('.item_a0.themed_a0[aria-label="Nitro Themes"]');
 
-// Check if the element exists
-if (targetDiv) {
-    // Clone the found element
-    const clonedDiv = targetDiv.cloneNode(true);
+// If the button doesn't exist, create and append it
+if (!existingButton) {
+    // Search for the target div
+    const targetDiv = document.querySelector('.item_a0.themed_a0[role="tab"][aria-label="Appearance"]');
 
-    // Modify the cloned element's properties
-    clonedDiv.setAttribute('aria-label', 'Nitro Themes');
-    clonedDiv.innerText = 'Nitro Themes';
+    // Check if the element exists
+    if (targetDiv) {
+        // Clone the found element
+        const clonedDiv = targetDiv.cloneNode(true);
 
-    // Add click event listener to the cloned element
-    clonedDiv.addEventListener('click', () => {
-        select();
-    });
+        // Modify the cloned element's properties
+        clonedDiv.setAttribute('aria-label', 'Nitro Themes');
+        clonedDiv.innerText = 'Nitro Themes';
 
-    // Insert the cloned element into the DOM (e.g., after the original)
-    targetDiv.parentElement.insertBefore(clonedDiv, targetDiv.nextSibling);
+        // Add click event listener to the cloned element
+        clonedDiv.addEventListener('click', () => {
+            select();
+        });
+
+        // Insert the cloned element into the DOM (e.g., after the original)
+        targetDiv.parentElement.insertBefore(clonedDiv, targetDiv.nextSibling);
+    }
 }
+
 }
 
 window.Gradiant = function(bottom, top) {
@@ -147,6 +154,7 @@ function select() {
 }
 
 function reload() {
+    selectbutton()
     if (load != undefined) {
         window[func]();
     }
