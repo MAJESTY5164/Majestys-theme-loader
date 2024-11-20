@@ -9,14 +9,13 @@
 //    };
 //})();
 
-
 window.names = []; // List of names
 window.icon = []; // List of icon
 window.funcname = []; // List of function names
 
 window.selectbutton = function() {
 // Check if the button already exists by looking for a specific aria-label or class
-const existingButton = document.querySelector('.item_a0.themed_a0[aria-label="Nitro Themes"]');
+const existingButton = document.querySelector('.item_a0.themed_a0[aria-label="Select Themes"]');
 
 // If the button doesn't exist, create and append it
 if (!existingButton) {
@@ -29,8 +28,8 @@ if (!existingButton) {
         const clonedDiv = targetDiv.cloneNode(true);
 
         // Modify the cloned element's properties
-        clonedDiv.setAttribute('aria-label', 'Nitro Themes');
-        clonedDiv.innerText = 'Nitro Themes';
+        clonedDiv.setAttribute('aria-label', 'Select Themes');
+        clonedDiv.innerText = 'Select Themes';
 
         // Add click event listener to the cloned element
         clonedDiv.addEventListener('click', () => {
@@ -41,8 +40,38 @@ if (!existingButton) {
         targetDiv.parentElement.insertBefore(clonedDiv, targetDiv.nextSibling);
     }
 }
-
 }
+
+window.loadbutton = function() {
+    // Check if the button already exists by looking for a specific aria-label or class
+    const existingButton = document.querySelector('.item_a0.themed_a0[aria-label="load Themes"]');
+    
+    // If the button doesn't exist, create and append it
+    if (!existingButton) {
+        // Search for the target div
+        const targetDiv = document.querySelector('.item_a0.themed_a0[role="tab"][aria-label="Appearance"]');
+    
+        // Check if the element exists
+        if (targetDiv) {
+            // Clone the found element
+            const clonedDiv = targetDiv.cloneNode(true);
+    
+            // Modify the cloned element's properties
+            clonedDiv.setAttribute('aria-label', 'load Themes');
+            clonedDiv.innerText = 'load Themes';
+    
+            // Add click event listener to the cloned element
+            clonedDiv.addEventListener('click', () => {
+                window.loadprompt()
+            });
+    
+            // Insert the cloned element into the DOM (e.g., after the original)
+            targetDiv.parentElement.insertBefore(clonedDiv, targetDiv.nextSibling);
+        }
+    }
+    }
+
+window.delay = 0
 
 window.Gradiant = function(bottom, top) {
     func = "Gradiant(\"load\", \"load\")"
@@ -154,13 +183,12 @@ function select() {
 }
 
 function reload() {
+    loadbutton()
     selectbutton()
-    if (load != undefined) {
         window[func]();
-    }
 }
 
-setInterval(reload, 500);
+setInterval(reload, window.delay);
 
 // Crimson Moon
 (function() {
@@ -218,4 +246,102 @@ setInterval(reload, 500);
         `;
         document.head.appendChild(style);
     };
+
+    //load prompt
+    window.loadprompt = function() {
+        // Create the overlay for the custom prompt
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        overlay.style.display = 'flex';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.style.zIndex = '1000';
+    
+        // Create the prompt box
+        const promptBox = document.createElement('div');
+        promptBox.style.backgroundColor = '#333'; // Dark background
+        promptBox.style.padding = '30px';
+        promptBox.style.borderRadius = '8px';
+        promptBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.4)';
+        promptBox.style.textAlign = 'center';
+        promptBox.style.width = '400px'; // Wider prompt box
+    
+        // Create the input field
+        const inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.placeholder = 'Github link';
+        inputField.style.marginBottom = '15px';
+        inputField.style.padding = '0px';
+        inputField.style.width = '100%'; // Full width
+        inputField.style.borderRadius = '4px';
+        inputField.style.border = '1px solid #555'; // Dark border
+        inputField.style.backgroundColor = '#444'; // Dark input field background
+        inputField.style.color = 'white'; // White text
+    
+        // Create Submit button
+        const submitButton = document.createElement('button');
+        submitButton.innerText = 'Submit';
+        submitButton.style.padding = '12px 20px';
+        submitButton.style.marginRight = '10px';
+        submitButton.style.backgroundColor = '#4CAF50'; // Green color
+        submitButton.style.color = 'white';
+        submitButton.style.border = 'none';
+        submitButton.style.borderRadius = '4px';
+        submitButton.style.cursor = 'pointer';
+    
+        // Create Cancel button
+        const cancelButton = document.createElement('button');
+        cancelButton.innerText = 'Cancel';
+        cancelButton.style.padding = '12px 20px';
+        cancelButton.style.backgroundColor = '#f44336'; // Red color
+        cancelButton.style.color = 'white';
+        cancelButton.style.border = 'none';
+        cancelButton.style.borderRadius = '4px';
+        cancelButton.style.cursor = 'pointer';
+    
+        // Add the input and buttons to the prompt box
+        promptBox.appendChild(inputField);
+        promptBox.appendChild(document.createElement('br')); // Line break
+        promptBox.appendChild(submitButton);
+        promptBox.appendChild(cancelButton);
+    
+        // Add the prompt box to the overlay
+        overlay.appendChild(promptBox);
+    
+        // Append the overlay to the body
+        document.body.appendChild(overlay);
+    
+        // Submit button click handler
+        submitButton.addEventListener('click', () => {
+            load(inputField.value);
+            document.body.removeChild(overlay); // Close the prompt
+        });
+    
+        // Cancel button click handler
+        cancelButton.addEventListener('click', () => {
+            document.body.removeChild(overlay); // Close the prompt
+        });
+    }
+
+    window.loadcustoms = function() {
+        if (window.autotheme === undefined) {
+            console.log("No auto theme selected")
+        }else {
+            console.log("autotheme loading")
+            for (i in autotheme) {
+            load(autotheme[i])
+        }
+        }}
+    window.loadauto = function() {
+        func = window.funcname[3]
+    }
+
+    loadcustoms()
+    setTimeout(loadauto, 0)
+    setTimeout(loadauto, 500)
 })();
